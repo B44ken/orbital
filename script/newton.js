@@ -44,10 +44,4 @@ export class NewtonSystem {
             }
         }, 1000 / this.tickrate)
     }
-
-    move(time) {
-        this.bodies.forEach(body => {
-            body.move(time)
-        })
-    }
 }

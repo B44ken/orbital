@@ -59,30 +59,6 @@ export class Canvas {
     }
 }
 
-export class HitboxCircle {
-    constructor(data) {
-        this.position = new Vector(data.position) || Vector.zero()
-        this.size = data.size || 0
-        this.rotation = data.rotation || 0
-    }
-    collision(other) {
-        const distance = this.position.sub(other.position).dist()
-        return distance < this.size + other.size
-    }
-}
-
-export class HitboxRectangle {
-    constructor(data) {
-        this.position = new Vector(data.position) || Vector.zero()
-        this.size = data.size || Vector.zero()
-        this.rotation = data.rotation || 0
-    }
-    collison(other) {
-        const distance = this.position.sub(other.position).dist()
-        return distance < this.size.x + other.size.x && distance < this.size.y + other.size.y
-    }
-}
-
 export class NewtonEntity extends NewtonBody {
     constructor(data) {
         super(data)
