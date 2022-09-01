@@ -2,18 +2,24 @@ import { Vector } from './vector.js'
 
 export const G = 0.00000001
 export class NewtonBody {
-    constructor(data) {
-        this.mass = data.mass
-        this.position = new Vector(data.position) || Vector.zero()
-        this.velocity = new Vector(data.velocity) || Vector.zero()
-        this.netForce = Vector.zero()
+    constructor(data = {}) {
+        this.mass = data.mass || 1000
+        this.position = new Vector(data.position) || new Vector
+        this.velocity = new Vector(data.velocity) || new Vector
+        this.force = new Vector(data.force) || new Vector
     }
 
     move(time, velocity = this.velocity) {
-        this.position = this.position.add(velocity.mult(time))
+        velocity = velocity.add(this.force.div(this.mass))
+        this.velocity = velocity
+        this.position = this.position.add(velocity)
     }
 
     addForce(force) {
+        this.force = this.force.add(force)
+    }
+
+    addImpulse(force) {
         this.velocity = this.velocity.add(force.div(this.mass))
     }
 
@@ -39,10 +45,13 @@ export class NewtonSystem {
                 this.canvas.draw(body1)      
                 for(const body2 of this.bodies) {
                     if(body1 === body2) continue
-                    body1.addForce(body2.gravity(body1))
+                    body1.addImpulse(body2.gravity(body1))
                 }
                 body1.move(1 / this.tickrate)
             }
         }, 1000 / this.tickrate)
     }
 }
+
+export const findOrbitVelocity = (moon, planet, radius) =>
+    Math.sqrt((G * (moon.mass + planet.mass)) / radius)

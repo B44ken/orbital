@@ -1,28 +1,25 @@
 import { HitboxCircle, HitboxNone, NewtonEntity } from './graphics.js'
 import { Vector } from './vector.js'
 import { Canvas } from './graphics.js'
-import { NewtonSystem } from './newton.js'
+import { findOrbitVelocity, NewtonSystem } from './newton.js'
 
 const planet = new NewtonEntity({
-    mass: 1e9,
-    position: Vector.zero(),
-    velocity: Vector.zero(),
+    mass: 100000000,
     color: '#0f0',
-    size: 3,
+    size: 10,
     hitbox: HitboxCircle
 })
 const ship = new NewtonEntity({
-    mass: 1e4,
-    position: new Vector({ x: 2, y: 0 }),
-    velocity: new Vector({ x: 0, y: 50 }),
-    size: 1,
-    rotation: 0,
+    mass: 1000,
+    position: new Vector({ x: 30, y: 0}),
     sprite: 'asset/ship.jpg',
-    hitbox: HitboxNone
 })
+ship.velocity.y = findOrbitVelocity(planet, ship, 30)
+
+window.ship = ship
 
 const canvas = new Canvas(document.querySelector('canvas'), {
-    scale: 20,
+    scale: 10,
 })
 const system = new NewtonSystem(canvas, {
     tickrate: 1000,
@@ -36,5 +33,4 @@ document.addEventListener('keydown', (e) => {
 
 setInterval(() => {
     const hit = planet.collide(ship)
-    console.log(hit)
 }, 200)

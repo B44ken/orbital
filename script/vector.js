@@ -1,7 +1,7 @@
 export class Vector {
-    constructor(component) {
-        this.x = component.x
-        this.y = component.y
+    constructor(component = {}) {
+        this.x = component.x || 0
+        this.y = component.y || 0
         if(this.z)
             this.z = component.z
     }
@@ -36,7 +36,7 @@ export class Vector {
             return new Vector({ x: this.x / other, y: this.y / other })
         }
     }
-    dist(vector = Vector.zero()) { 
+    dist(vector = new Vector) { 
         const dx = this.x - vector.x
         const dy = this.y - vector.y
         const distance = Math.sqrt(dx * dx + dy * dy)

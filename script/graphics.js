@@ -13,7 +13,7 @@ export class Canvas {
             x: innerWidth * 0.5,
             y: innerHeight * 0.5
         })
-        this.cameraPos = Vector.zero()
+        this.cameraPos = new Vector
         this.listenForResize()
     }
     clear(color) {
@@ -64,7 +64,7 @@ export const HitboxCircle = (A, B) => {
 export const HitboxNone = () => false
 
 export class NewtonEntity extends NewtonBody {
-    constructor(data) {
+    constructor(data = {}) {
         super(data)
         this.rotation = data.rotation || 0
         this.rotationVelocity = data.rotationVelocity || 0
@@ -75,7 +75,7 @@ export class NewtonEntity extends NewtonBody {
                 this.sprite.src = data.sprite
             }
         }
-        this.size = data.size || 20
+        this.size = data.size || 1
         this.color = data.color || '#fff'
         this.hitbox = data.hitbox || (() => false)
         this.bounce = data.bounce || 0.1
