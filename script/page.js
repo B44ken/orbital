@@ -14,8 +14,8 @@ const ship = new NewtonEntity({
     mass: 1e4,
     position: new Vector({ x: 5, y: 0 }),
     velocity: new Vector({ x: 0, y: 50 }),
-    size: 0.7,
-    rotation: 10,
+    size: 1,
+    rotation: 0,
     sprite: 'asset/ship.jpg'
 })
 
@@ -39,6 +39,7 @@ let maxHeight = 0
 setInterval(() => {
     maxHeight = Math.max(maxHeight, ship.position.dist())
     console.log(maxHeight)
+    ship.rotation += 0.01
 }, 10)
 
 window.maxHeight = maxHeight

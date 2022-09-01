@@ -28,23 +28,21 @@ export class Canvas {
                 y: entity.position.y * this.scale + this.centerScreen.y
             })
             const realSize = entity.size * this.scale
-            this.canvas.drawImage(entity.sprite, realPosition.x - realSize / 2, realPosition.y - realSize / 2, realSize, realSize)
-
+            this.canvas.save()
+            this.canvas.translate(realPosition.x, realPosition.y)
+            this.canvas.rotate(entity.rotation)
+            this.canvas.drawImage(entity.sprite, -realSize / 2, -realSize / 2, realSize, realSize)
+            this.canvas.restore()
         } else {
             const realPosition = new Vector({
                 x: entity.position.x * this.scale + this.centerScreen.x,
                 y: entity.position.y * this.scale + this.centerScreen.y
             })
             const realSize = entity.size * this.scale
-            // rotate the canvas and then draw the entity
-            this.canvas.save()
-            this.canvas.translate(realPosition.x, realPosition.y)
-            this.canvas.rotate(entity.rotation)
             this.canvas.fillStyle = entity.color
             this.canvas.beginPath()
-            this.canvas.arc(0, 0, realSize, 0, Math.PI * 2)
+            this.canvas.arc(realPosition.x, realPosition.y, realSize, 0, Math.PI * 2)
             this.canvas.fill()
-            this.canvas.restore()
         }
     }
     listenForResize() {
