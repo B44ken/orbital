@@ -57,6 +57,12 @@ export class Canvas {
     }
 }
 
+export const HitboxCircle = (A, B) => {
+    const distance = A.position.dist(B.position)
+    return distance < A.size + B.size
+}
+export const HitboxNone = () => false
+
 export class NewtonEntity extends NewtonBody {
     constructor(data) {
         super(data)
@@ -71,5 +77,10 @@ export class NewtonEntity extends NewtonBody {
         }
         this.size = data.size || 20
         this.color = data.color || '#fff'
+        this.hitbox = data.hitbox || (() => false)
+        this.bounce = data.bounce || 0.1
+    }
+    collide(other) {
+        return this.hitbox(this, other)
     }
 }

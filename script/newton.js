@@ -6,6 +6,7 @@ export class NewtonBody {
         this.mass = data.mass
         this.position = new Vector(data.position) || Vector.zero()
         this.velocity = new Vector(data.velocity) || Vector.zero()
+        this.netForce = Vector.zero()
     }
 
     move(time, velocity = this.velocity) {

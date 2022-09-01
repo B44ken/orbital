@@ -1,4 +1,4 @@
-import { NewtonEntity } from './graphics.js'
+import { HitboxCircle, HitboxNone, NewtonEntity } from './graphics.js'
 import { Vector } from './vector.js'
 import { Canvas } from './graphics.js'
 import { NewtonSystem } from './newton.js'
@@ -8,15 +8,17 @@ const planet = new NewtonEntity({
     position: Vector.zero(),
     velocity: Vector.zero(),
     color: '#0f0',
-    size: 3
+    size: 3,
+    hitbox: HitboxCircle
 })
 const ship = new NewtonEntity({
     mass: 1e4,
-    position: new Vector({ x: 5, y: 0 }),
+    position: new Vector({ x: 2, y: 0 }),
     velocity: new Vector({ x: 0, y: 50 }),
     size: 1,
     rotation: 0,
-    sprite: 'asset/ship.jpg'
+    sprite: 'asset/ship.jpg',
+    hitbox: HitboxNone
 })
 
 const canvas = new Canvas(document.querySelector('canvas'), {
@@ -27,19 +29,12 @@ const system = new NewtonSystem(canvas, {
     bodies: [ planet, ship],
 })
 
-document.addEventListener('keydown', (event) => {
-    if (event.key == 'w') {
-        ship.velocity = ship.velocity.mult(1.1)
-    } else if (event.key == 's') {
-        ship.velocity = ship.velocity.mult(0.9)
-    }
+document.addEventListener('keydown', (e) => {
+    if(e.key == 'q')
+        system.paused = !system.paused
 })
 
-let maxHeight = 0
 setInterval(() => {
-    maxHeight = Math.max(maxHeight, ship.position.dist())
-    console.log(maxHeight)
-    ship.rotation += 0.01
-}, 10)
-
-window.maxHeight = maxHeight
+    const hit = planet.collide(ship)
+    console.log(hit)
+}, 200)
