@@ -1,12 +1,12 @@
-import { NewtonEntity } from "./graphics.js";
+import { NewtonEntity } from "./newton.js";
 import { Vector } from "./vector.js";
 
 export class ShipEntity extends NewtonEntity {
     constructor(data = {}) {
         super(data)
         this.rotationSpeed = data.rotationSpeed || 0
-        this.maxThrust = data.maxThrust || 0
-        this.controller = new data.controller(this)
+        this.maxThrust = data.maxThrust || 10
+        this.controller = new data.controller(this, data)
         this.force = data.force || new Vector
     }
 }
@@ -14,9 +14,21 @@ export class ShipEntity extends NewtonEntity {
 export class KeyboardControl {
     constructor(parent, data = {}) {
         this.parent = parent
-        this.thrust = 0
+        this.thrust = data.thrust || 10
         this.rotation = 0
-        document.addEventListener('keydown', event => null)
+        this.init(parent)
+    }
+    init(ship) {
+        console.log('init', ship)
+        document.addEventListener('keydown', event => {
+            const heading = ship.velocity.normal().mult(this.thrust)
+            if(event.key == 'w')
+                ship.force = heading
+        })
+        document.addEventListener('keyup', event => {
+            if(event.key == 'w')
+                ship.force = new Vector({x: 0, y: -1})
+        })
     }
 }
 

@@ -1,36 +1,33 @@
-import { HitboxCircle, HitboxNone, NewtonEntity } from './graphics.js'
 import { Vector } from './vector.js'
-import { Canvas } from './graphics.js'
-import { findOrbitVelocity, NewtonSystem } from './newton.js'
-
-const planet = new NewtonEntity({
-    mass: 100000000,
-    color: '#0f0',
-    size: 10,
-    hitbox: HitboxCircle
-})
-const ship = new NewtonEntity({
-    mass: 1000,
-    position: new Vector({ x: 30, y: 0}),
-    sprite: 'asset/ship.jpg',
-})
-ship.velocity.y = findOrbitVelocity(planet, ship, 30)
-
-window.ship = ship
+import { Canvas, HitboxCircle } from './graphics.js'
+import { findOrbitVelocity, NewtonEntity, NewtonSystem } from './newton.js'
+import { KeyboardControl, ShipEntity } from './ship.js'
 
 const canvas = new Canvas(document.querySelector('canvas'), {
-    scale: 10,
+    scale: 3,
 })
 const system = new NewtonSystem(canvas, {
-    tickrate: 1000,
-    bodies: [ planet, ship],
+    tickrate: 60,
 })
 
-document.addEventListener('keydown', (e) => {
-    if(e.key == 'q')
-        system.paused = !system.paused
+const planet = new NewtonEntity({
+    mass: 10000000000,
+    position: new Vector,
+    size: 30,
+    color: '#fff',
 })
 
-setInterval(() => {
-    const hit = planet.collide(ship)
-}, 200)
+const moon = new ShipEntity({
+    mass: 1000,
+    position: new Vector({ x: 100, y: 20 }),
+    velocity: new Vector({ x: 0, y: 0.1 }),
+    size: 5,
+    color: '#f00',
+    controller: KeyboardControl,
+    hitbox: HitboxCircle,
+})
+window.moon = moon
+
+// moon.velocity.y = findOrbitVelocity(planet, moon, moon.position.dist(planet.position))
+
+system.bodies.push(planet, moon)

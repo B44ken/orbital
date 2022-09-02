@@ -28,6 +28,35 @@ export class NewtonBody {
         const magnitude = (G * this.mass * body.mass) / (this.position.dist(body.position) ** 2)
         return direction.mult(magnitude)
     }
+
+    static angle(deg) {
+        return new Vector({
+            x: Math.cos(deg),
+            y: Math.sin(deg)
+        })
+    }
+}
+
+export class NewtonEntity extends NewtonBody {
+    constructor(data = {}) {
+        super(data)
+        this.rotation = data.rotation || 0
+        this.rotationVelocity = data.rotationVelocity || 0
+        this.sprite = null
+        if(data.sprite) {
+            if(typeof data.sprite === 'string') {
+                this.sprite = new Image()
+                this.sprite.src = data.sprite
+            }
+        }
+        this.size = data.size || 1
+        this.color = data.color || '#fff'
+        this.hitbox = data.hitbox || (() => false)
+        this.bounce = data.bounce || 0.7
+    }
+    collide(other) {
+        return this.hitbox(this, other)
+    }
 }
 
 export class NewtonSystem {
@@ -46,6 +75,12 @@ export class NewtonSystem {
                 for(const body2 of this.bodies) {
                     if(body1 === body2) continue
                     body1.addImpulse(body2.gravity(body1))
+                    if(body1.collide(body2)) {
+                        if(body1.velocity.dist() < 0.1)
+                            body1.velocity = new Vector
+                        body1.velocity = body1.velocity.mult(-body2.bounce)
+                        body1.position = body1.position.add(body1.velocity)
+                    }
                 }
                 body1.move(1 / this.tickrate)
             }

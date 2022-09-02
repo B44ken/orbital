@@ -1,4 +1,3 @@
-import { NewtonBody } from "./newton.js"
 import { Vector } from "./vector.js"
 
 export class Canvas {
@@ -62,25 +61,3 @@ export const HitboxCircle = (A, B) => {
     return distance < A.size + B.size
 }
 export const HitboxNone = () => false
-
-export class NewtonEntity extends NewtonBody {
-    constructor(data = {}) {
-        super(data)
-        this.rotation = data.rotation || 0
-        this.rotationVelocity = data.rotationVelocity || 0
-        this.sprite = null
-        if(data.sprite) {
-            if(typeof data.sprite === 'string') {
-                this.sprite = new Image()
-                this.sprite.src = data.sprite
-            }
-        }
-        this.size = data.size || 1
-        this.color = data.color || '#fff'
-        this.hitbox = data.hitbox || (() => false)
-        this.bounce = data.bounce || 0.1
-    }
-    collide(other) {
-        return this.hitbox(this, other)
-    }
-}
