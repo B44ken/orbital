@@ -11,16 +11,17 @@ const system = new NewtonSystem(canvas, {
 })
 
 const planet = new NewtonEntity({
-    mass: 10000000000,
+    mass: 1e7,
     position: new Vector,
     size: 30,
     color: '#fff',
 })
+window.planet = planet
 
 const moon = new ShipEntity({
     mass: 1000,
-    position: new Vector({ x: 100, y: 20 }),
-    velocity: new Vector({ x: 0, y: 0.1 }),
+    position: new Vector({ x: 100, y: 0 }),
+    velocity: new Vector({ x: 0, y: 0 }),
     size: 5,
     color: '#f00',
     controller: KeyboardControl,
@@ -28,6 +29,6 @@ const moon = new ShipEntity({
 })
 window.moon = moon
 
-// moon.velocity.y = findOrbitVelocity(planet, moon, moon.position.dist(planet.position))
+moon.velocity.y = findOrbitVelocity(planet, moon)
 
 system.bodies.push(planet, moon)

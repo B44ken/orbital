@@ -2,11 +2,6 @@ export class Vector {
     constructor(component = {}) {
         this.x = component.x || 0
         this.y = component.y || 0
-        if(this.z)
-            this.z = component.z
-    }
-    static zero() {
-        return new Vector({ x: 0, y: 0, z: 0 })
     }
     add(other) {
         if(other instanceof Vector) {
@@ -43,8 +38,9 @@ export class Vector {
         return distance
     }
     normal() {
-        const magnitude = this.dist(new Vector({ x: 0, y: 0 }))
-        return this.div(magnitude)
+        return this.div(this.dist())
     }
-
+    angle() {
+        return Math.atan2(this.y, this.x)
+    }
 }

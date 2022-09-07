@@ -78,8 +78,8 @@ export class NewtonSystem {
                     if(body1.collide(body2)) {
                         if(body1.velocity.dist() < 0.1)
                             body1.velocity = new Vector
-                        body1.velocity = body1.velocity.mult(-body2.bounce)
-                        body1.position = body1.position.add(body1.velocity)
+                            body1.velocity = body1.velocity.mult(-body2.bounce)
+                            body1.position = body1.position.add(body1.velocity)
                     }
                 }
                 body1.move(1 / this.tickrate)
@@ -88,5 +88,5 @@ export class NewtonSystem {
     }
 }
 
-export const findOrbitVelocity = (moon, planet, radius) =>
-    Math.sqrt((G * (moon.mass + planet.mass)) / radius)
+export const findOrbitVelocity = (moon, planet) =>
+    Math.sqrt((G * (moon.mass + planet.mass)) / (planet.position.dist(moon.position)))
