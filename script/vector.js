@@ -12,9 +12,9 @@ export class Vector {
     }
     sub(other) {
         if(other instanceof Vector) {
-            return new Vector({ x: this.x - other.x, y: this.y - other.y })
+            return this.add(other.mult(-1))
         } else if(typeof other === 'number') {
-            return new Vector({ x: this.x - other, y: this.y - other })
+            return this.add(-other)
         }
     }
     mult(other) {
@@ -40,7 +40,15 @@ export class Vector {
     normal() {
         return this.div(this.dist())
     }
-    angle() {
-        return Math.atan2(this.y, this.x)
+    angle(other = new Vector) {
+        console.log(other, this.sub(other))
+        return 1
+    }
+
+    static fromAngle(a, mag = 1) {
+        return new Vector({
+            x: Math.cos(a),
+            y: Math.sin(a)
+        }).mult(mag)
     }
 }

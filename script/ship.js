@@ -19,7 +19,6 @@ export class KeyboardControl {
         this.init(parent)
     }
     init(ship) {
-        console.log('init', ship)
         document.addEventListener('keydown', event => {
             const heading = ship.velocity.normal().mult(this.thrust)
             if(event.key == 'w')
