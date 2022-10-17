@@ -8,6 +8,12 @@
     <script type="module" src="script/page.js" defer></script>
 </head>
 <body style="margin: 0; overflow: hidden">
-    <canvas width="1000" height="600"></canvas>
+    <canvas width="1000" height="600" style="z-index: 1;"></canvas>
+
+    <select class="scenario" style="z-index: 2; position: absolute; right: 8px; top: 8px; font-size: 19px;">
+        <option value="nothing">Scenarios</option>
+        <option value="ship">Ship</option>
+        <option value="binary">Binary System</option>
+    </select>    
 </body>
 </html>

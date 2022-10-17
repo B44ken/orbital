@@ -37,6 +37,7 @@ export class NewtonEntity extends NewtonBody {
         this.rotationVelocity = data.rotationVelocity || 0
         this.sprite = null
         if(data.sprite) {
+            this.spriteSize = data.spriteSize || this.size
             if(typeof data.sprite === 'string') {
                 this.sprite = new Image()
                 this.sprite.src = data.sprite
@@ -51,10 +52,11 @@ export class NewtonEntity extends NewtonBody {
         if(this.velocity.dist() < 0.1)
             this.velocity = new Vector
         
-        const newAngle = 2 * this.position.angle(other.position)
-        this.velocity = Vector.fromAngle(newAngle, this.velocity.dist())
-        this.velocity = this.velocity.mult(other.bounciness)
-        this.position = this.position.add(other.position)
+        this.velocity = this.velocity.mult(-this.bounciness)
+        // const newAngle = 2 * this.position.angle(other.position)
+        // this.velocity = Vector.fromAngle(newAngle, this.velocity.dist())
+        // this.velocity = this.velocity.mult(other.bounciness)
+        // this.position = this.position.add(other.position)
     }
     collide(other) {
         return this.hitbox(this, other)

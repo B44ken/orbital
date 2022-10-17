@@ -1,32 +1,14 @@
-import { Vector } from './vector.js'
-import { Canvas, HitboxCircle } from './graphics.js'
-import { findOrbitVelocity, NewtonEntity, NewtonSystem } from './newton.js'
-import { KeyboardControl, ShipEntity } from './ship.js'
+import { binaryScenario } from './scenario/binary.js'
+import { shipScenario } from './scenario/ship.js'
 
-const canvas = new Canvas(document.querySelector('canvas'), {
-    scale: 3,
-})
-const system = new NewtonSystem(canvas, {
-    tickrate: 60,
+document.querySelector('select').addEventListener('change', event => {
+    location.search = `?scenario=${event.target.value}` 
 })
 
-const planet = new NewtonEntity({
-    mass: 5e8,
-    position: new Vector,
-    size: 50,
-    color: '#fff',
-})
-window.planet = planet
+const query = new URLSearchParams(window.location.search)
+const scenario = query.get('scenario') || 'ship'
 
-const moon = new ShipEntity({
-    mass: 1000,
-    position: new Vector({ x: -40, y: 50 }),
-    velocity: new Vector({ x: 1, y: 0 }),
-    size: 5,
-    color: '#f00',
-    controller: KeyboardControl,
-    hitbox: HitboxCircle,
-})
-window.moon = moon
-
-system.bodies.push(planet, moon)
+if(scenario == 'binary')
+    binaryScenario()
+if(scenario == 'ship')
+    shipScenario()

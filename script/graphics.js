@@ -26,7 +26,7 @@ export class Canvas {
                 x: entity.position.x * this.scale + this.centerScreen.x,
                 y: entity.position.y * this.scale + this.centerScreen.y
             })
-            const realSize = entity.size * this.scale
+            const realSize = entity.spriteSize * this.scale
             this.canvas.save()
             this.canvas.translate(realPosition.x, realPosition.y)
             this.canvas.rotate(entity.rotation)
