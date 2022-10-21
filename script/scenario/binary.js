@@ -1,5 +1,5 @@
-import { Canvas } from '../graphics.js'
-import { findOrbitVelocity, NewtonBody, NewtonEntity, NewtonSystem } from '../newton.js'
+import { Canvas, HitboxCircle } from '../graphics.js'
+import { findOrbitVelocity, NewtonEntity, NewtonSystem } from '../newton.js'
 import { Vector } from '../vector.js'
 
 
@@ -22,8 +22,8 @@ export const binaryScenario = () => {
         color: '#00f',
     })
     
-    planetA.velocity.y = findOrbitVelocity(planetA, planetB) * -.5
-    planetB.velocity.y = findOrbitVelocity(planetB, planetA) * .5
+    planetA.velocity.y = findOrbitVelocity(planetA, planetB) * -.50
+    planetB.velocity.y = findOrbitVelocity(planetB, planetA) * .50
     
     system.bodies.push(planetA, planetB)
 }

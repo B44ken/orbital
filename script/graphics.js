@@ -24,7 +24,7 @@ export class Canvas {
         if(entity.sprite) {
             const realPosition = new Vector({
                 x: entity.position.x * this.scale + this.centerScreen.x,
-                y: entity.position.y * this.scale + this.centerScreen.y
+                y: -entity.position.y * this.scale + this.centerScreen.y
             })
             const realSize = entity.spriteSize * this.scale
             this.canvas.save()

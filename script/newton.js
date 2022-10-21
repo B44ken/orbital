@@ -1,18 +1,23 @@
 import { Vector } from './vector.js'
 
-export const G = 0.00000001
+export const G = 0.0000001
+
 export class NewtonBody {
     constructor(data = {}) {
-        this.mass = data.mass || 1000
+        this.mass = data.mass || 100
         this.position = new Vector(data.position) || new Vector
         this.velocity = new Vector(data.velocity) || new Vector
         this.force = new Vector(data.force) || new Vector
     }
 
-    move(time, velocity = this.velocity) {
+    move(time, velocity = this.velocity, rotation = this.rotation) {
         velocity = velocity.add(this.force.div(this.mass))
         this.velocity = velocity
         this.position = this.position.add(velocity)
+
+        if(this.rotationSpeed != 0 && !isNaN(this.rotationSpeed)) {
+            this.rotation += this.rotationSpeed / time
+        }
     }
 
     addForce(force) {
@@ -24,6 +29,8 @@ export class NewtonBody {
     }
 
     gravity(body) {
+        if(this.hasGravity == false) return new Vector
+
         const direction = this.position.sub(body.position).normal()
         const magnitude = (G * this.mass * body.mass) / (this.position.dist(body.position) ** 2)
         return direction.mult(magnitude)
@@ -35,6 +42,11 @@ export class NewtonEntity extends NewtonBody {
         super(data)
         this.rotation = data.rotation || 0
         this.rotationVelocity = data.rotationVelocity || 0
+        this.size = data.size || 1
+        this.color = data.color || '#fff'
+        this.hitbox = data.hitbox || (() => false)
+        this.bounciness = data.bounciness || 0.75
+        this.hasGravity =  data.hasGravity || true
         this.sprite = null
         if(data.sprite) {
             this.spriteSize = data.spriteSize || this.size
@@ -43,20 +55,13 @@ export class NewtonEntity extends NewtonBody {
                 this.sprite.src = data.sprite
             }
         }
-        this.size = data.size || 1
-        this.color = data.color || '#fff'
-        this.hitbox = data.hitbox || (() => false)
-        this.bounciness = data.bounciness || 0.75
     }
     bounce(other) {
         if(this.velocity.dist() < 0.1)
             this.velocity = new Vector
         
         this.velocity = this.velocity.mult(-this.bounciness)
-        // const newAngle = 2 * this.position.angle(other.position)
-        // this.velocity = Vector.fromAngle(newAngle, this.velocity.dist())
-        // this.velocity = this.velocity.mult(other.bounciness)
-        // this.position = this.position.add(other.position)
+        this.position = this.position.sub(other.position).normal(other.size + 0.2)
     }
     collide(other) {
         return this.hitbox(this, other)
@@ -71,22 +76,36 @@ export class NewtonSystem {
         this.paused = false
         this.canvas = canvas
 
-        setInterval(() => {
-            if(this.paused) return
-            this.canvas.clear(this.background)
-            for(const body1 of this.bodies) {
-                this.canvas.draw(body1)      
-                for(const body2 of this.bodies) {
-                    if(body1 === body2)
-                        continue
-                    body1.addImpulse(body2.gravity(body1))
-                    if(body1.collide(body2))
-                        body1.bounce(body2)
-                        
+        this.startAnimationFrames()
+    }
+
+    doPhysics(time) {
+        if(this.paused) return
+        this.canvas.clear(this.background)
+        for(const body1 of this.bodies) {
+            this.canvas.draw(body1)      
+            body1.addImpulse(body1.force)
+            for(const body2 of this.bodies) {
+                if(body1 === body2)
+                    continue
+                body1.addImpulse(body2.gravity(body1))
+                if(body1.collide(body2)) {
+                    body1.bounce(body2)
                 }
-                body1.move(1 / this.tickrate)
+                    
             }
-        }, 1000 / this.tickrate)
+            body1.move(time)
+        }
+    }
+
+    startAnimationFrames() {
+        let lastTime = 0
+        const loop = (time) => {
+            this.doPhysics(time - lastTime)
+            lastTime = time
+            requestAnimationFrame(loop)
+        }
+        requestAnimationFrame(loop)
     }
 }
 

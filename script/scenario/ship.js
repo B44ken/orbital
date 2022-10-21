@@ -1,20 +1,21 @@
-import { Canvas } from '../graphics.js'
-import { findOrbitVelocity, NewtonBody, NewtonEntity, NewtonSystem } from '../newton.js'
+import { Canvas, HitboxCircle } from '../graphics.js'
+import { findOrbitVelocity, NewtonEntity, NewtonSystem } from '../newton.js'
+import { KeyboardControl, ShipEntity } from '../ship.js'
 import { Vector } from '../vector.js'
 
-const canvas = new Canvas(document.querySelector('canvas'), { scale: 5 })
+const canvas = new Canvas(document.querySelector('canvas'))
 
 const system = new NewtonSystem(canvas, { tickrate: 60 })
 
 const planet = new NewtonEntity({
-    mass: 1e8,
-    size: 10,
+    mass: 5e5
 })
 
-const ship = new NewtonEntity({
-    position: new Vector({ x: 30, y: 0}),
-    sprite: '../asset/ship.png',
-    spriteSize: 5,
+const ship = new ShipEntity({
+    position: new Vector({ x: 10 }),
+    sprite: 'asset/ship.png',
+    controller: KeyboardControl,
+    hitbox: HitboxCircle,
 })
 
 ship.velocity.y = findOrbitVelocity(ship, planet)

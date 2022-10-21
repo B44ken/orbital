@@ -1,5 +1,6 @@
 import { binaryScenario } from './scenario/binary.js'
 import { shipScenario } from './scenario/ship.js'
+import { trinaryScenario } from './scenario/trinary.js'
 
 document.querySelector('select').addEventListener('change', event => {
     location.search = `?scenario=${event.target.value}` 
@@ -12,3 +13,5 @@ if(scenario == 'binary')
     binaryScenario()
 if(scenario == 'ship')
     shipScenario()
+if(scenario == 'trinary')
+    trinaryScenario()

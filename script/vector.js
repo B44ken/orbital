@@ -37,8 +37,8 @@ export class Vector {
         const distance = Math.sqrt(dx * dx + dy * dy)
         return distance
     }
-    normal() {
-        return this.div(this.dist())
+    normal(length = 1) {
+        return this.div(this.dist()).mult(length)
     }
     angle(other = new Vector) {
         console.log(other, this.sub(other))
@@ -47,8 +47,8 @@ export class Vector {
 
     static fromAngle(a, mag = 1) {
         return new Vector({
-            x: Math.cos(a),
-            y: Math.sin(a)
+            x: Math.sin(a),
+            y: Math.cos(a)
         }).mult(mag)
     }
 }
