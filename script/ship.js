@@ -1,10 +1,10 @@
 import { NewtonEntity } from "./newton.js";
 import { Vector } from "./vector.js";
 
-export class ShipEntity extends NewtonEntity {
+export class Ship extends NewtonEntity {
     constructor(data = {}) {
         super(data)
-        this.rotationAccel = data.rotationAccel || 4
+        this.rotationAccel = data.rotationAccel || 2
         this.rotationSpeed = data.rotationSpeed || 0
         this.rotation = data.rotation || 0
         this.thrust = data.thrust || .1
@@ -34,15 +34,15 @@ export class KeyboardControl {
     }
     updateForces(ship) {
         if(this.keysPressed.has('a'))
-            this.currentControls.rotation = -1
-        else if(this.keysPressed.has('d'))
             this.currentControls.rotation = 1
+        else if(this.keysPressed.has('d'))
+            this.currentControls.rotation = -1
         else this.currentControls.rotation = 0
 
         if(this.keysPressed.has('w'))
-            this.currentControls.thrust = 1
-        else if(this.keysPressed.has('s'))
             this.currentControls.thrust = -1
+        else if(this.keysPressed.has('s'))
+            this.currentControls.thrust = 1
         else this.currentControls.thrust = 0
 
         const heading = Vector.fromAngle(this.parent.rotation)

@@ -1,13 +1,11 @@
 import { Vector } from './vector.js'
 
-export const G = 0.0000001
-
 export class NewtonBody {
     constructor(data = {}) {
         this.mass = data.mass || 100
-        this.position = new Vector(data.position) || new Vector
-        this.velocity = new Vector(data.velocity) || new Vector
-        this.force = new Vector(data.force) || new Vector
+        this.position = data.position || new Vector
+        this.velocity = data.velocity || new Vector
+        this.force = data.force || new Vector
     }
 
     move(time, velocity = this.velocity, rotation = this.rotation) {
@@ -28,7 +26,7 @@ export class NewtonBody {
         this.velocity = this.velocity.add(force.div(this.mass))
     }
 
-    gravity(body) {
+    gravity(body, G) {
         if(this.hasGravity == false) return new Vector
 
         const direction = this.position.sub(body.position).normal()
@@ -56,7 +54,11 @@ export class NewtonEntity extends NewtonBody {
             }
         }
     }
+
+    // beyond broken
     bounce(other) {
+        return
+
         if(this.velocity.dist() < 0.1)
             this.velocity = new Vector
         
@@ -69,11 +71,12 @@ export class NewtonEntity extends NewtonBody {
 }
 
 export class NewtonSystem {
-    constructor(canvas, data) {
+    G = 0.0000001
+    paused = false
+    constructor(canvas, data = {}) {
         this.bodies = data.bodies || []
         this.tickrate = data.tickrate || 60
         this.background = data.background || '#000'
-        this.paused = false
         this.canvas = canvas
 
         this.startAnimationFrames()
@@ -88,11 +91,10 @@ export class NewtonSystem {
             for(const body2 of this.bodies) {
                 if(body1 === body2)
                     continue
-                body1.addImpulse(body2.gravity(body1))
+                body1.addImpulse(body2.gravity(body1, this.G))
                 if(body1.collide(body2)) {
                     body1.bounce(body2)
                 }
-                    
             }
             body1.move(time)
         }
@@ -107,8 +109,9 @@ export class NewtonSystem {
         }
         requestAnimationFrame(loop)
     }
+    
+    // G(m1m2)/r²
+    static findOrbitVelocity(moon, planet, G) {
+        return Math.sqrt((G * (moon.mass + planet.mass)) / (planet.position.dist(moon.position)))
+    }
 }
-
-// G(m1m2)/r^2
-export const findOrbitVelocity = (moon, planet) =>
-    Math.sqrt((G * (moon.mass + planet.mass)) / (planet.position.dist(moon.position)))

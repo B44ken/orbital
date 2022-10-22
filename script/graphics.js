@@ -24,12 +24,12 @@ export class Canvas {
         if(entity.sprite) {
             const realPosition = new Vector({
                 x: entity.position.x * this.scale + this.centerScreen.x,
-                y: -entity.position.y * this.scale + this.centerScreen.y
+                y: entity.position.y * this.scale + this.centerScreen.y
             })
             const realSize = entity.spriteSize * this.scale
             this.canvas.save()
             this.canvas.translate(realPosition.x, realPosition.y)
-            this.canvas.rotate(entity.rotation)
+            this.canvas.rotate(-entity.rotation)
             this.canvas.drawImage(entity.sprite, -realSize / 2, -realSize / 2, realSize, realSize)
             this.canvas.restore()
         } else {
