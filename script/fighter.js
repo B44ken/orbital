@@ -2,7 +2,7 @@ import { NewtonEntity } from './newton.js';
 import { Vector } from './vector.js';
 
 export class Projectile extends NewtonEntity {
-    constructor(parent) {
+    constructor(parent, system) {
         super()
         this.velocity = Vector.fromAngle(parent.rotation).mult(-0.5)
         this.position = parent.position.add(this.velocity)
@@ -11,8 +11,7 @@ export class Projectile extends NewtonEntity {
         this.color = '#38f2f5'
 
         setTimeout(() => {
-            delete this
-            this.velocity = new Vector
+            system.bodies.delete(this)
         }, 500)
     }
 }

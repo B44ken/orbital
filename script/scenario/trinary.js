@@ -33,5 +33,5 @@ export const trinaryScenario = () => {
         color: '#00f',
     })
     
-    system.bodies.push(planetA, planetB, planetC)
+    system.bodies.add(planetA, planetB, planetC)
 }

@@ -8,7 +8,7 @@ document.querySelector('select').addEventListener('change', event => {
 })
 
 const query = new URLSearchParams(window.location.search)
-const scenario = query.get('scenario') || 'ship'
+const scenario = query.get('scenario') || 'shoot'
 
 if(scenario == 'binary')
     binaryScenario()

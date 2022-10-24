@@ -74,7 +74,7 @@ export class NewtonSystem {
     G = 0.0000001
     paused = false
     constructor(canvas, data = {}) {
-        this.bodies = data.bodies || []
+        this.bodies = new Set(data.bodies || [])
         this.tickrate = data.tickrate || 60
         this.background = data.background || '#000'
         this.canvas = canvas

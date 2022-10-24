@@ -6,15 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>orbital</title>
     <script type="module" src="script/page.js" defer></script>
+    <link rel="stylesheet" href="index.css">
 </head>
-<body style="margin: 0; overflow: hidden">
+<body>
     <canvas width="1000" height="600" style="z-index: 1;"></canvas>
 
-    <select class="scenario" style="z-index: 2; position: absolute; right: 8px; top: 8px; font-size: 19px;">
+    <select class="scenario">
         <option value="nothing">Scenarios</option>
         <option value="ship">Ship</option>
         <option value="binary">Binary System</option>
         <option value="shoot">Shooting</option>
-    </select>    
+    </select>
+
+    <div class="joystick-circle">
+        <div class="joystick-stick"></div>
+    </div>
 </body>
 </html>
