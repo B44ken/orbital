@@ -22,8 +22,8 @@ export const binaryScenario = () => {
         color: '#00f',
     })
     
-    planetA.velocity.y = NewtonSystem.findOrbitVelocity(planetA, planetB) * -.50
-    planetB.velocity.y = NewtonSystem.findOrbitVelocity(planetB, planetA) * .50
+    planetA.velocity.y = NewtonSystem.findOrbitVelocity(planetA, planetB, system.G) * -.50
+    planetB.velocity.y = NewtonSystem.findOrbitVelocity(planetB, planetA, system.G) * .50
     
     system.bodies.add(planetA)
     system.bodies.add(planetB)
