@@ -7,12 +7,12 @@ export class JoystickControl {
         const circle = document.querySelector('.joystick-circle')
         const stick = document.querySelector('.joystick-stick')
 
-        document.addEventListener('click', event => {
+        document.addEventListener('mousedown', event => {
             circle.classList.add('active')
         })
 
-        document.addEventListener('', event => {
+        document.addEventListener('mouseup', event => {
             circle.classList.remove('active')
-        }
+        })
     }
 }
