@@ -23,5 +23,6 @@ export const shipScenario = () => {
 
     ship.velocity.x = NewtonSystem.findOrbitVelocity(ship, planet, system.G)
 
-    system.bodies.add(planet, ship)
+    system.bodies.add(planet)
+    system.bodies.add(ship)
 }
