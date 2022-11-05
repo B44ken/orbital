@@ -11,27 +11,34 @@ export class JoystickControl extends Control {
     }   
     
     init() {
-        document.addEventListener('mousedown', event => {
-            this.mousePos = new Vector({ x: event.x, y: event.y })
-            this.position.classList.add('active')
+        document.addEventListener('mousedown', this.onDown)
+        document.addEventListener('touchstart', this.onDown)
+        document.addEventListener('mouseup', this.onUp)
+        document.addEventListener('touchend', this.onUp)
+        document.addEventListener('mousemove', this.onMove)
+        document.addEventListener('touchmove', this.onMove)
+    }
 
-            this.circle.style.left = this.mousePos.x + 'px'
-            this.circle.style.top = this.mousePos.y + 'px'
+    onDown(event) {
+        this.mousePos = new Vector({ x: event.x, y: event.y })
+        this.position.classList.add('active')
 
-            this.moveButton()
-        })
+        this.circle.style.left = this.mousePos.x + 'px'
+        this.circle.style.top = this.mousePos.y + 'px'
 
-        document.addEventListener('mouseup', event => {
-            this.position.classList.remove('active')
-            this.currentControls.rotation = 0
-        })
+        this.moveButton()
+    }
 
-        document.addEventListener('mousemove', event => {
-            this.mousePos = new Vector({ x: event.x, y: event.y })
-            this.moveButton()
-            this.update()
-            this.setForces(this.parent)
-        })
+    onUp(event) {
+        this.position.classList.remove('active')
+        this.currentControls.rotation = 0
+    }
+
+    onMove(event) {
+        this.mousePos = new Vector({ x: event.x, y: event.y })
+        this.moveButton()
+        this.update()
+        this.setForces(this.parent)
     }
 
     moveButton() {
