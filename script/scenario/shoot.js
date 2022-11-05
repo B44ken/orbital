@@ -1,5 +1,6 @@
+import { BothControls } from "../control/both.js"
 import { KeyboardControl } from "../control/keyboard.js"
-import { Projectile } from "../fighter.js"
+import { Shooter } from "../fighter.js"
 import { Canvas, HitboxCircle } from "../graphics.js"
 import { NewtonSystem } from "../newton.js"
 import { Ship } from "../ship.js"
@@ -11,15 +12,24 @@ export const shootingScenario = () => {
 
     const ship = new Ship({
         mass: 100,
+        hp: 100,
         sprite: 'asset/ship.png',
+        position: new Vector({ x: 0, y: 5 }),
+        hitbox: HitboxCircle,
         controller: new KeyboardControl,
         hitbox: HitboxCircle,
+        action: new Shooter
     })
 
     const opponent = new Ship({
         mass: 100,
+        hp: 100,
         sprite: 'asset/ship-blue.png',
-        position: new Vector({ x: 0, y: -10 }),
+        position: new Vector({ x: 0, y: -5 }),
+        controller: new BothControls({ layout: {
+            up: 'i', down: 'k', left: 'j', right: 'l', action: 'u',
+        }}),
+        rotation: Math.PI,
         hitbox: HitboxCircle,
         action: new Shooter
     })

@@ -5,9 +5,9 @@ import { KeyboardControl } from "./keyboard.js";
 export class BothControls extends Control {
     constructor(parent) {
         super(parent)
-        this.joystick = new JoystickControl()
+        this.joystick = new JoystickControl(parent)
         this.joystick.parent = parent
-        this.keyboard = new KeyboardControl()
+        this.keyboard = new KeyboardControl(parent)
         this.keyboard.parent = parent
     }
 
