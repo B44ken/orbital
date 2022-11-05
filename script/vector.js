@@ -44,6 +44,9 @@ export class Vector {
         console.log(other, this.sub(other))
         return 1
     }
+    dot(other) {
+        return this.x * other.x + this.y * other.y
+    }
 
     static fromAngle(a, mag = 1) {
         return new Vector({

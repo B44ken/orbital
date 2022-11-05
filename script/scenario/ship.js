@@ -11,14 +11,17 @@ export const shipScenario = () => {
 
     const planet = new NewtonEntity({
         mass: 5e5,
-        size: 1.5
+        size: 1.5,
+        hitbox: HitboxCircle,
     })
 
     const ship = new Ship({
         position: new Vector({ y: -10 }),
-        spriteSize: 1,
+        spriteSize: 1.2,
+        size: 0.6,
         sprite: 'asset/ship.png',
         controller: KeyboardControl,
+        hitbox: HitboxCircle
     })
 
     ship.velocity.x = NewtonSystem.findOrbitVelocity(ship, planet, system.G)

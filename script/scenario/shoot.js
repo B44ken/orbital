@@ -22,5 +22,7 @@ export const shootingScenario = () => {
         }
     })
 
+    
+
     system.bodies.add(ship)
 }

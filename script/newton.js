@@ -46,6 +46,7 @@ export class NewtonEntity extends NewtonBody {
         this.bounciness = data.bounciness || 0.75
         this.hasGravity =  data.hasGravity || true
         this.sprite = null
+        this.hp = data.hp || 100
         if(data.sprite) {
             this.spriteSize = data.spriteSize || this.size
             if(typeof data.sprite === 'string') {
@@ -57,13 +58,11 @@ export class NewtonEntity extends NewtonBody {
 
     // beyond broken
     bounce(other) {
-        return
-
-        if(this.velocity.dist() < 0.1)
-            this.velocity = new Vector
-        
-        this.velocity = this.velocity.mult(-this.bounciness)
-        this.position = this.position.sub(other.position).normal(other.size + 0.2)
+        // r=d−2(d⋅n)n
+        const normal = this.position.sub(other.position).normal()
+        const dot = this.velocity.dot(normal)
+        const reflection = this.velocity.sub(normal.mult(dot * 2))
+        this.velocity = reflection.mult(this.bounciness)
     }
     collide(other) {
         return this.hitbox(this, other)
@@ -94,6 +93,7 @@ export class NewtonSystem {
                 body1.addImpulse(body2.gravity(body1, this.G))
                 if(body1.collide(body2)) {
                     body1.bounce(body2)
+                    if(body1.onCollide) body1.onCollide(body2)
                 }
             }
             body1.move(time)

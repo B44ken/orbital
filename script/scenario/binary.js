@@ -1,4 +1,4 @@
-import { Canvas } from '../graphics.js'
+import { Canvas, HitboxCircle } from '../graphics.js'
 import { NewtonEntity, NewtonSystem } from '../newton.js'
 import { Vector } from '../vector.js'
 
@@ -10,14 +10,14 @@ export const binaryScenario = () => {
     
     const planetA = new NewtonEntity({
         mass: 1e8,
-        position: new Vector({ x: -25, y: 0}),
+        position: new Vector({ x: -50, y: 0}),
         size: 10,
         color: '#f00',
     })
     
     const planetB = new NewtonEntity({
         mass: 1e8,
-        position: new Vector({ x: 25, y: 0}),
+        position: new Vector({ x: 50, y: 0}),
         size: 10,
         color: '#00f',
     })
