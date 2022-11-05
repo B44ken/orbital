@@ -3,6 +3,7 @@ import { NewtonEntity, NewtonSystem } from '../newton.js'
 import { Ship } from '../ship.js'
 import { KeyboardControl } from "../control/keyboard.js"
 import { Vector } from '../vector.js'
+import { Shooter } from '../fighter.js'
 
 export const shipScenario = () => {
     const canvas = new Canvas(document.querySelector('canvas'))
@@ -20,12 +21,12 @@ export const shipScenario = () => {
         spriteSize: 1.2,
         size: 0.6,
         sprite: 'asset/ship.png',
-        controller: KeyboardControl,
-        hitbox: HitboxCircle
+        controller: new KeyboardControl,
+        hitbox: HitboxCircle,
+        action: new Shooter
     })
 
     ship.velocity.x = NewtonSystem.findOrbitVelocity(ship, planet, system.G)
 
-    system.bodies.add(planet)
-    system.bodies.add(ship)
+    system.addBodies(planet, ship)
 }

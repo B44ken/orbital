@@ -6,7 +6,13 @@ export class NewtonBody {
         this.position = data.position || new Vector
         this.velocity = data.velocity || new Vector
         this.force = data.force || new Vector
+        this.system = null
     }
+
+    attach(system) {
+        this.system = system
+    }
+
 
     move(time, velocity = this.velocity, rotation = this.rotation) {
         velocity = velocity.add(this.force.div(this.mass))
@@ -46,7 +52,7 @@ export class NewtonEntity extends NewtonBody {
         this.bounciness = data.bounciness || 0.75
         this.hasGravity =  data.hasGravity || true
         this.sprite = null
-        this.hp = data.hp || 100
+        this.hp = data.hp || Infinity
         if(data.sprite) {
             this.spriteSize = data.spriteSize || this.size
             if(typeof data.sprite === 'string') {
@@ -108,6 +114,14 @@ export class NewtonSystem {
             requestAnimationFrame(loop)
         }
         requestAnimationFrame(loop)
+    }
+
+    addBodies(...bodies) {
+        for(const body of bodies) {
+            this.bodies.add(body)
+            if(body.attach)
+                body.attach(this)
+        }
     }
     
     // G(m1m2)/r²

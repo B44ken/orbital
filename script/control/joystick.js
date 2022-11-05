@@ -40,6 +40,7 @@ export class JoystickControl extends Control {
         this.currentControls.rotation = 0
         this.currentControls.thrust = 0
         this.position.classList.remove('active')
+        this.setForces()
     }
 
     onMove(event) {
@@ -53,7 +54,7 @@ export class JoystickControl extends Control {
         }
         this.moveButton()
         this.update()
-        this.setForces(this.parent)
+        this.setForces()
     }
 
     moveButton() {

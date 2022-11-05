@@ -1,16 +1,22 @@
 import { Vector } from "../vector.js"
 
 export class Control {
-    constructor(parent) {
-        this.parent = parent
+    constructor() {
         this.currentControls = {}
-        this.init(parent)
     }
 
-    setForces(ship) {
+    attach(parent) {
+        this.parent = parent
+    }
+
+    setForces() {
         const heading = Vector.fromAngle(this.parent.rotation)
-        ship.force = heading.mult(this.currentControls.thrust * this.parent.thrust)
-        ship.rotationSpeed = this.currentControls.rotation * this.parent.rotationAccel
+        this.parent.force = heading.mult(this.currentControls.thrust * this.parent.thrust)
+        this.parent.rotationSpeed = this.currentControls.rotation * this.parent.rotationAccel
+
+        if(this.currentControls.action && this.parent.action) {
+            this.parent.action.doAction()
+        }
     }
 
 }
