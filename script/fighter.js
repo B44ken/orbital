@@ -28,7 +28,6 @@ export class Projectile extends NewtonEntity {
         other.hp -= 10
         if(other.hp <= 0)
             this.system.bodies.delete(other)
-        console.log('collsion with ', other)
     }
 }
 

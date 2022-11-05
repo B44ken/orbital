@@ -41,7 +41,6 @@ export class Vector {
         return this.div(this.dist()).mult(length)
     }
     angle(other = new Vector) {
-        console.log(other, this.sub(other))
         return 1
     }
     dot(other) {
