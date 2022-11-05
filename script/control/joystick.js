@@ -20,7 +20,7 @@ export class JoystickControl extends Control {
     }
 
     onDown(event) {
-        this.mousePos = new Vector({ x: event.x, y: event.y })
+        this.mousePos = new Vector({ x: event.x | event.clientX, y: event.y | event.clientY })
         this.position.classList.add('active')
 
         this.circle.style.left = this.mousePos.x + 'px'
@@ -35,7 +35,7 @@ export class JoystickControl extends Control {
     }
 
     onMove(event) {
-        this.mousePos = new Vector({ x: event.x, y: event.y })
+        this.mousePos = new Vector({ x: event.x | event.clientX, y: event.y | event.clientY })
         this.moveButton()
         this.update()
         this.setForces(this.parent)
