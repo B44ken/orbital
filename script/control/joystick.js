@@ -11,12 +11,12 @@ export class JoystickControl extends Control {
     }   
     
     init() {
-        document.addEventListener('mousedown', this.onDown)
-        document.addEventListener('touchstart', this.onDown)
-        document.addEventListener('mouseup', this.onUp)
-        document.addEventListener('touchend', this.onUp)
-        document.addEventListener('mousemove', this.onMove)
-        document.addEventListener('touchmove', this.onMove)
+        document.addEventListener('mousedown', e => this.onDown(e))
+        document.addEventListener('touchstart', e => this.onDown(e))
+        document.addEventListener('mouseup', e => this.onUp(e))
+        document.addEventListener('touchend', e => this.onUp(e))
+        document.addEventListener('mousemove', e => this.onMove(e))
+        document.addEventListener('touchmove', e => this.onMove(e))
     }
 
     onDown(event) {
