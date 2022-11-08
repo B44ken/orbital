@@ -6,6 +6,7 @@ import { Canvas, HitboxCircle } from "../graphics.js"
 import { NewtonSystem } from "../newton.js"
 import { Ship } from "../ship.js"
 import { Vector } from "../vector.js"
+import { Fuel } from '../fuel.js'
 
 export const shootingScenario = () => {
     const canvas = new Canvas(document.querySelector('canvas'))
@@ -19,7 +20,8 @@ export const shootingScenario = () => {
         controller: new BothControls,
         rotation: Math.PI,
         hitbox: HitboxCircle,
-        action: new Shooter
+        action: new Shooter({ firePeriod: 350 }),
+	fuel: new Fuel,
     })
     
     const opponent = new Ship({

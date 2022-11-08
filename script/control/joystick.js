@@ -33,6 +33,8 @@ export class JoystickControl extends Control {
         this.circle.style.left = this.mousePos.x + 'px'
         this.circle.style.top = this.mousePos.y + 'px'
 
+        this.currentControls.action = true
+
         this.moveButton()
     }
 
@@ -40,6 +42,9 @@ export class JoystickControl extends Control {
         this.currentControls.rotation = 0
         this.currentControls.thrust = 0
         this.position.classList.remove('active')
+
+        this.currentControls.action = false
+
         this.setForces()
     }
 
@@ -87,5 +92,6 @@ export class JoystickControl extends Control {
 
         this.currentControls.rotation = -stick.x
         this.currentControls.thrust = stick.y
+
     }
 }
