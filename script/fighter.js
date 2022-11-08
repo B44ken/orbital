@@ -13,8 +13,11 @@ export class Shooter {
     }
 
     doAction() {
+
         const sinceLastShot = Date.now() - this.lastShot
         if(sinceLastShot > this.firePeriod) {
+            if(this.ship.hp < 0) return // hack
+
             this.lastShot = Date.now()
             const bullet = new Projectile
             bullet.attachParent(this.ship)
@@ -45,7 +48,6 @@ export class Projectile extends NewtonEntity {
         this.velocity = Vector.fromAngle(this.parent.rotation).mult(-this.parent.size * 1.4)
         // shouldn't have to move the projectile outside the parent's position
         this.position = parent.position.add(this.velocity) 
-        console.log(this.system)
         this.system.addBodies(this)
 
     }

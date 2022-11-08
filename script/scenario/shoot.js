@@ -19,7 +19,7 @@ export const shootingScenario = () => {
         controller: new BothControls,
         rotation: Math.PI,
         hitbox: HitboxCircle,
-        action: new Shooter
+        action: new Shooter({ firePeriod: 350 })
     })
     
     const opponent = new Ship({
