@@ -11,8 +11,8 @@ export const shipScenario = () => {
     const system = new NewtonSystem(canvas, { tickrate: 60 })
 
     const planet = new NewtonEntity({
-        mass: 5e5,
-        size: 1.5,
+        mass: 5e4,
+        size: 2,
         hitbox: HitboxCircle,
     })
 

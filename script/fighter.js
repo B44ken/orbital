@@ -3,8 +3,8 @@ import { NewtonEntity } from './newton.js';
 import { Vector } from './vector.js';
 
 export class Shooter {
-    constructor() {
-        this.firePeriod = 500
+    constructor(data = {}) {
+        this.firePeriod = data.firePeriod || 500
         this.lastShot = 0
     }
 
@@ -26,7 +26,7 @@ export class Projectile extends NewtonEntity {
     constructor() {
         super()
         this.system = null
-        this.mass = 0.1
+        this.mass = 0.001
         this.size = 0.2
         this.color = '#38f2f5'
         this.damage = 30

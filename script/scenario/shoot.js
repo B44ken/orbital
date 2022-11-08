@@ -1,3 +1,4 @@
+import { AIControl } from "../control/ai.js"
 import { BothControls } from "../control/both.js"
 import { KeyboardControl } from "../control/keyboard.js"
 import { Shooter } from "../fighter.js"
@@ -10,29 +11,28 @@ export const shootingScenario = () => {
     const canvas = new Canvas(document.querySelector('canvas'))
     const system = new NewtonSystem(canvas)
 
-    const ship = new Ship({
-        mass: 100,
-        hp: 100,
-        sprite: 'asset/ship.png',
-        position: new Vector({ x: 0, y: 5 }),
-        hitbox: HitboxCircle,
-        controller: new KeyboardControl,
-        hitbox: HitboxCircle,
-        action: new Shooter
-    })
-
-    const opponent = new Ship({
+    const player = new Ship({
         mass: 100,
         hp: 100,
         sprite: 'asset/ship-blue.png',
         position: new Vector({ x: 0, y: -5 }),
-        controller: new BothControls({ layout: {
-            up: 'i', down: 'k', left: 'j', right: 'l', action: 'u',
-        }}),
+        controller: new BothControls,
         rotation: Math.PI,
         hitbox: HitboxCircle,
         action: new Shooter
     })
     
-    system.addBodies(ship, opponent)
+    const opponent = new Ship({
+        mass: 100,
+        hp: 100,
+        sprite: 'asset/ship.png',
+        position: new Vector({ x: 0, y: 5 }),
+        hitbox: HitboxCircle,
+        controller: new AIControl,
+        hitbox: HitboxCircle,
+        action: new Shooter({ firePeriod: 2000 }),
+        rotation: Math.random() * Math.PI * 2,
+    })
+
+    system.addBodies(player, opponent)
 }

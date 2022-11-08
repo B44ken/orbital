@@ -41,7 +41,7 @@ export class Vector {
         return this.div(this.dist()).mult(length)
     }
     angle(other = new Vector) {
-        return 1
+        return Math.atan2(this.x - other.x, this.y - other.y)
     }
     dot(other) {
         return this.x * other.x + this.y * other.y
