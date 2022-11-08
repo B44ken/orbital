@@ -1,4 +1,3 @@
-import { Vector } from "../vector.js"
 import { Control } from "./control.js"
 
 // thrust, rotationAccel only updates on keyup and keydown

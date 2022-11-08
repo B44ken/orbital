@@ -1,0 +1,15 @@
+@import 'joystick.css';
+@import 'fuel.css';
+
+body {
+    margin: 0;
+    overflow: hidden;
+}
+
+.scenario {
+    z-index: 2;
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    font-size: 19px;
+}
