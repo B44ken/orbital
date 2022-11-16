@@ -19,9 +19,6 @@
     background: #50c750
 }
 
-.fuel-inner:hover {
-}
-
 .fuel-inner.danger {
     background: #f62c2c;
 }

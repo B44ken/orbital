@@ -89,7 +89,7 @@ export class NewtonSystem {
 
     doPhysics(time) {
         if(this.paused) return
-        this.canvas.clear(this.background)
+        this.canvas.reset(this.background)
         for(const body1 of this.bodies) {
             this.canvas.draw(body1)      
             body1.addImpulse(body1.force)

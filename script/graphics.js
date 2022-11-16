@@ -12,20 +12,26 @@ export class Canvas {
             x: innerWidth * 0.5,
             y: innerHeight * 0.5
         })
-        this.cameraPos = new Vector
+        this.cameraPos = new Vector(3, 3)
         this.listenForResize()
     }
-    clear(color) {
+    reset(color) {
         this.canvas.clearRect(0, 0, this.canvasElement.width, this.canvasElement.height)
         this.canvas.fillStyle = color
         this.canvas.fillRect(0, 0, this.canvasElement.width, this.canvasElement.height)
+        if(this.camera) {
+            this.camera.findScale()
+            this.camera.findCenter()
+            this.cameraPos = this.camera.center
+            this.scale = this.camera.scale
+        }
     }
     draw(entity) {
+        const realPosition = new Vector({
+            x: (entity.position.x - this.cameraPos.x) * this.scale + this.centerScreen.x,
+            y: (entity.position.y - this.cameraPos.y) * this.scale + this.centerScreen.y
+        })
         if(entity.sprite) {
-            const realPosition = new Vector({
-                x: entity.position.x * this.scale + this.centerScreen.x,
-                y: entity.position.y * this.scale + this.centerScreen.y
-            })
             const realSize = entity.spriteSize * this.scale
             this.canvas.save()
             this.canvas.translate(realPosition.x, realPosition.y)
@@ -33,10 +39,6 @@ export class Canvas {
             this.canvas.drawImage(entity.sprite, -realSize / 2, -realSize / 2, realSize, realSize)
             this.canvas.restore()
         } else {
-            const realPosition = new Vector({
-                x: entity.position.x * this.scale + this.centerScreen.x,
-                y: entity.position.y * this.scale + this.centerScreen.y
-            })
             const realSize = entity.size * this.scale
             this.canvas.fillStyle = entity.color
             this.canvas.beginPath()

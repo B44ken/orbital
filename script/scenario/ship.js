@@ -4,11 +4,15 @@ import { Ship } from '../ship.js'
 import { KeyboardControl } from "../control/keyboard.js"
 import { Vector } from '../vector.js'
 import { Shooter } from '../fighter.js'
+import { Camera } from '../camera.js'
 
 export const shipScenario = () => {
     const canvas = new Canvas(document.querySelector('canvas'))
-
     const system = new NewtonSystem(canvas, { tickrate: 60 })
+    canvas.camera = new Camera({
+        bodies: system.bodies,
+        baseZoom: 200
+    })
 
     const planet = new NewtonEntity({
         mass: 5e4,
