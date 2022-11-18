@@ -7,6 +7,10 @@ document.querySelector('select').addEventListener('change', event => {
     location.search = `?scenario=${event.target.value}` 
 })
 
+document.querySelector('.modal-close').addEventListener('click', event => {
+    document.querySelector('.modal').classList.add('hidden')
+})
+
 const query = new URLSearchParams(window.location.search)
 const scenario = query.get('scenario') || 'ship'
 
