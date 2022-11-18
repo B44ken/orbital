@@ -18,6 +18,7 @@ export const shipScenario = () => {
         mass: 5e4,
         size: 2,
         hitbox: HitboxCircle,
+        class: ['cameraTrack']  
     })
 
     const ship = new Ship({
@@ -27,10 +28,13 @@ export const shipScenario = () => {
         sprite: 'asset/ship.png',
         controller: new BothControls,
         hitbox: HitboxCircle,
-        action: new Shooter
+        action: new Shooter,
+        class: ['cameraTrack']
     })
 
     ship.velocity.x = NewtonSystem.findOrbitVelocity(ship, planet, system.G)
 
     system.addBodies(planet, ship)
+
+    window.setScale = s => canvas.camera.scale = s
 }

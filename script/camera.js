@@ -2,26 +2,34 @@ import { Vector } from "./vector.js"
 
 export class Camera {
     constructor(data = {}) {
-        this.baseZoom = data.baseZoom || 200
-        this.minScale = data.minScale || 10
-        this.maxScale = data.maxScale || 20
+        this.multiplier = data.multiplier || 1.5
+        this.minSize = data.minSize || 20
+        this.maxSize = data.maxSize || 100
         this.bodies = data.bodies || []
     }
     
     getExtents() {
-        const xMax = Math.max(...Array(...this.bodies).map(body => body.position.x + body.size))
-        const xMin = Math.min(...Array(...this.bodies).map(body => body.position.x - body.size))
-        const yMax = Math.max(...Array(...this.bodies).map(body => body.position.y + body.size))
-        const yMin = Math.min(...Array(...this.bodies).map(body => body.position.y - body.size))
+        const tracked = Array(...this.bodies).filter(body => body.class.has('cameraTrack'))
 
-        this.extents = {xMax, xMin, yMax, yMin}
+        const xMax = Math.max(...tracked.map(body => body.position.x + body.size))
+        const xMin = Math.min(...tracked.map(body => body.position.x - body.size))
+        const yMax = Math.max(...tracked.map(body => body.position.y + body.size))
+        const yMin = Math.min(...tracked.map(body => body.position.y - body.size))
+
+        this.tracked = tracked
+        this.extents = {
+            x: xMax - xMin,
+            y: yMax - yMin,
+            xMax, xMin, yMax, yMin
+        }
     }
 
     findScale() {
         this.getExtents()
-        const {xMax, xMin, yMax, yMin} = this.extents
-        const realScale = this.baseZoom / Math.max(xMax - xMin, yMax - yMin)
-        this.scale = Math.min(Math.max(realScale, this.minScale), this.maxScale)
+        const X = Math.max(Math.min(this.extents.x, this.maxSize), this.minSize)
+        const Y = Math.max(Math.min(this.extents.y, this.maxSize), this.minSize)
+        this.scale = Math.min(innerWidth / X, innerHeight / Y) / this.multiplier
+
     }
 
     findCenter() {
@@ -29,6 +37,7 @@ export class Camera {
         this.center = new Vector({
             x: (this.extents.xMax + this.extents.xMin) / 2,
             y: (this.extents.yMax + this.extents.yMin) / 2
+
         })
     }
 }

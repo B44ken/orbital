@@ -53,6 +53,7 @@ export class NewtonEntity extends NewtonBody {
         this.hasGravity =  data.hasGravity || true
         this.sprite = null
         this.hp = data.hp || Infinity
+        this.class = new Set(data.class || null)
         if(data.sprite) {
             this.spriteSize = data.spriteSize || this.size
             if(typeof data.sprite === 'string') {
