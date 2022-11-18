@@ -8,7 +8,7 @@ import { Ship } from "../ship.js"
 import { Vector } from "../vector.js"
 import { Fuel } from '../fuel.js'
 
-export const shootingScenario = () => {
+export const AIScenario = () => {
     const canvas = new Canvas(document.querySelector('canvas'))
     const system = new NewtonSystem(canvas)
 
@@ -29,7 +29,6 @@ export const shootingScenario = () => {
         hp: 100,
         sprite: 'asset/ship.png',
         position: new Vector({ x: 0, y: 5 }),
-        hitbox: HitboxCircle,
         controller: new AIControl,
         hitbox: HitboxCircle,
         action: new Shooter({ firePeriod: 2000 }),

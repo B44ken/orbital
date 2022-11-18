@@ -1,10 +1,10 @@
 import { Canvas, HitboxCircle } from '../graphics.js'
 import { NewtonEntity, NewtonSystem } from '../newton.js'
 import { Ship } from '../ship.js'
-import { KeyboardControl } from "../control/keyboard.js"
 import { Vector } from '../vector.js'
 import { Shooter } from '../fighter.js'
 import { Camera } from '../camera.js'
+import { BothControls } from '../control/both.js'
 
 export const shipScenario = () => {
     const canvas = new Canvas(document.querySelector('canvas'))
@@ -25,7 +25,7 @@ export const shipScenario = () => {
         spriteSize: 1.2,
         size: 0.6,
         sprite: 'asset/ship.png',
-        controller: new KeyboardControl,
+        controller: new BothControls,
         hitbox: HitboxCircle,
         action: new Shooter
     })
