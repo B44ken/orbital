@@ -5,10 +5,11 @@ import { Control } from "./control.js"
 export class KeyboardControl extends Control {
     constructor(data = {}) {
         super()
-        this.keysPressed = new Set
-        this.init()
         const dataLayout = data.layout || {}
+        this.keysPressed = new Set
         this.layout = { left: 'a', right: 'd', up: 'w', down: 's', action: ' ', ...dataLayout }
+        this.turnSens = data.turnSens || 0.5
+        this.init()
     }
 
     init(ship) {
@@ -26,9 +27,9 @@ export class KeyboardControl extends Control {
 
     updateKeys() {
         if(this.keysPressed.has(this.layout.left))
-            this.currentControls.rotation = 1
+            this.currentControls.rotation = this.turnSens
         else if(this.keysPressed.has(this.layout.right))
-            this.currentControls.rotation = -1
+            this.currentControls.rotation = -this.turnSens
         else this.currentControls.rotation = 0
 
         if(this.keysPressed.has(this.layout.up))

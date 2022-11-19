@@ -1,11 +1,12 @@
 export class Fuel {
     constructor(data = {}) {
-        this.parent = null
+        this.ship = data.ship || null
+        this.maxThrust = data.ship.thrust || 0.1
         this.maxFuel = data.maxFuel || 10
-        this.fuel = data.fuel || 6
+        this.fuel = this.maxFuel * 0.5
         this.gainRate = data.gainRate || 0.2
         this.outOfFuel = false
-        this.interval = 0.2
+        this.interval = 1 / 20
 
         setInterval(() => this.track(), 1000 * this.interval)
         this.setGauge()
@@ -16,12 +17,12 @@ export class Fuel {
     }
 
     attach(ship) {
-        this.ship = ship
-        this.maxThrust = ship.thrust
+        // this.ship = ship
+        // this.maxThrust = ship.thrust
     }
 
     track() {
-        const thrust = this.ship?.controller?.currentControls?.thrust || 0
+        const thrust = this.ship?.controller?.currentControls.thrust || 0
 
         // intention: landing on a planet gives 10x fuel
         let gain = this.gainRate * this.interval

@@ -5,36 +5,62 @@ import { Vector } from '../vector.js'
 import { Shooter } from '../fighter.js'
 import { Camera } from '../camera.js'
 import { BothControls } from '../control/both.js'
+import { KeyboardControl } from '../control/keyboard.js'
+import { Fuel } from '../fuel.js'
 
 export const shipScenario = () => {
     const canvas = new Canvas(document.querySelector('canvas'))
     const system = new NewtonSystem(canvas, { tickrate: 60 })
     canvas.camera = new Camera({
         bodies: system.bodies,
-        baseZoom: 200
+        minSize: 40
     })
 
     const planet = new NewtonEntity({
-        mass: 5e4,
-        size: 2,
+        mass: 5e6,
+        size: 16,
         hitbox: HitboxCircle,
         class: ['cameraTrack']  
     })
 
-    const ship = new Ship({
-        position: new Vector({ y: -10 }),
-        spriteSize: 1.2,
-        size: 0.6,
+    const playerA = new Ship({
+        hp: 100,
+        mass: 5,
+        thrust: 0.005,
+        position: new Vector({ y: -30 }),
+        spriteSize: 2,
         sprite: 'asset/ship.png',
         controller: new BothControls,
         hitbox: HitboxCircle,
         action: new Shooter,
-        class: ['cameraTrack']
+        class: ['cameraTrack', 'cameraTrackAlways']
     })
 
-    ship.velocity.x = NewtonSystem.findOrbitVelocity(ship, planet, system.G)
+    const playerB = new Ship({
+        hp: 100,
+        sprite: 'asset/ship.png',
+        position: new Vector({ y: 30 }),
+        rotation: Math.PI,
+        hitbox: HitboxCircle,
+        action: new Shooter,
+        spriteSize: 2,
+        sprite: 'asset/ship-blue.png',
+        class: ['cameraTrack'],
+        controller: new KeyboardControl({
+            layout: { 
+                "up": "i",
+                "down": "k",
+                "left": "j",
+                "right": "l",
+                "action": "h"  
+            }
+        })
+    })
 
-    system.addBodies(planet, ship)
 
-    window.setScale = s => canvas.camera.scale = s
+    playerA.velocity.x = NewtonSystem.findOrbitVelocity(playerA, planet, system.G)
+    playerB.velocity.x = -NewtonSystem.findOrbitVelocity(playerB, planet, system.G)
+
+
+    system.addBodies(planet, playerA, playerB)
 }

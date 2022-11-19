@@ -1,5 +1,4 @@
 import { NewtonEntity } from "./newton.js";
-import { Shooter } from "./fighter.js";
 
 export class Ship extends NewtonEntity {
     constructor(data = {}) {
