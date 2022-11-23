@@ -13,7 +13,6 @@ export class Shooter {
     }
 
     doAction() {
-
         const sinceLastShot = Date.now() - this.lastShot
         if(sinceLastShot > this.firePeriod) {
             if(this.ship.hp < 0) return // hack

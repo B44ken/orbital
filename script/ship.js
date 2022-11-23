@@ -14,8 +14,5 @@ export class Ship extends NewtonEntity {
 
         this.action = data.action || null
         if(this.action) this.action.attach(this)
-
-        this.fuel = data.fuel || null
-        if(this.fuel) this.fuel.attach(this)
     }
 }
