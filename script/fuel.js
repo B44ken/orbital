@@ -17,8 +17,8 @@ export class Fuel {
     }
 
     attach(ship) {
-        // this.ship = ship
-        // this.maxThrust = ship.thrust
+        this.ship = ship
+        this.maxThrust = ship.thrust
     }
 
     track() {

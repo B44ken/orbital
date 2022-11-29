@@ -20,8 +20,8 @@ export const versusScenario = () => {
         rotation: Math.PI,
         hitbox: HitboxCircle,
         action: new Shooter,
-	size: 0.7,
-	spriteSize: 1.4
+        size: 0.7,
+        spriteSize: 1.4
     })
     
     const playerB = new Ship({
@@ -31,26 +31,26 @@ export const versusScenario = () => {
         position: new Vector({ x: 8, y: 0 }),
         hitbox: HitboxCircle,
         controller: new KeyboardControl({
-		layout: {
-			"up": "i",
-			"down": "k",
-			"left": "j",
-			"right": "l",
-			"action": "h"
-		}	
-	}),
+        layout: {
+            "up": "i",
+            "down": "k",
+            "left": "j",
+            "right": "l",
+            "action": "h"
+        }
+    }),
         hitbox: HitboxCircle,
         action: new Shooter,
-	size: 0.7,
-	spriteSize: 1.4
+        size: 0.7,
+        spriteSize: 1.4
     })
 
     const planet = new NewtonEntity({
-	mass: 300_000,
-	hp: Infinity,
-	size: 4,
-	hitbox: HitboxCircle,
-	color: '#afa',
+        mass: 300_000,
+        hp: Infinity,
+        size: 4,
+        hitbox: HitboxCircle,
+        color: '#afa',
     })
 
 

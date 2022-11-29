@@ -21,7 +21,7 @@ export const AIScenario = () => {
         rotation: Math.PI,
         hitbox: HitboxCircle,
         action: new Shooter({ firePeriod: 350 }),
-	fuel: new Fuel,
+        fuel: new Fuel,
     })
     
     const opponent = new Ship({
